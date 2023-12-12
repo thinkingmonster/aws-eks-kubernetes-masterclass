@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app3-ingress
+  name: app2-ingress
   annotations:
     # Ingress Core Settings  
     #kubernetes.io/ingress.class: "alb"
@@ -30,12 +30,18 @@ metadata:
     # external-dns.alpha.kubernetes.io/hostname: ingress-groups-demo601.stacksimplify.com 
     # Ingress Groups
     alb.ingress.kubernetes.io/group.name: myapps.web
-    alb.ingress.kubernetes.io/group.order: '30'
+    alb.ingress.kubernetes.io/group.order: '20'
 spec:
   ingressClassName: my-aws-ingress-class   # Ingress Class
-  defaultBackend:
-    service:
-      name: app3-nginx-nodeport-service
-      port:
-        number: 80    
+  rules:  
+    - http:
+        paths:
+          - path: /app2
+            pathType: Prefix
+            backend:
+              service:
+                name: app2-nginx-nodeport-service
+                port: 
+                  number: 80
+
 
